@@ -153,8 +153,19 @@ const DEFAULT_CANTON_FACTOR = 247/175;
 export function findBestStarLayout(nStars: number,
     {cantonFactor = DEFAULT_CANTON_FACTOR, kinds}: {cantonFactor?: number, kinds?: LayoutKind[]} = {},
 ): Layout {
-    throw new Error("Not implemented");
-    // return min(generateStarLayouts(nStars, {kinds: kinds}), {key: (layout) => optimizeLayout(layout, cantonFactor)});
+    let minLayout: Layout|undefined;
+    let minValue = Infinity;
+    for (const layout of generateStarLayouts(nStars, {kinds})) {
+        const value = optimizeLayout(layout, cantonFactor)
+        if (value < minValue) {
+            minLayout = layout;
+            minValue = value;
+        }
+    }
+    if (minLayout === undefined) {
+        throw new Error("No layout found");
+    }
+    return minLayout;
 }
 
 /**
