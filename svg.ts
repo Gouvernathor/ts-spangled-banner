@@ -26,7 +26,7 @@ export function getSVGFromLayout(measurements: Measurements, layout: Layout,
 
     populateHeader(svg, width, height, measurements);
     addRectStripes(svg, measurements, colors);
-    // use of addCantonFromLayout possible here
+    // addCantonFromLayout(svg, measurements, layout, colors); // possible alternative
     addCantonFromCoordinates(svg, measurements, new Set(coordinatesFromLayout(layout)) as Iterable<[number, number]>, colors);
 
     return svg;
@@ -97,7 +97,71 @@ function addRectStripes(svg: SVGSVGElement, measurements: Measurements, colors: 
 }
 
 function addCantonFromLayout(svg: SVGSVGElement, measurements: Measurements, layout: Layout, colors: FlagColors) {
-    throw new Error("Not implemented");
+    const canton = svg.appendChild(document.createElementNS(SVG_NS, "rect"));
+
+    const [nbLgRows, lnLgRows, nbShRows, lnShRows] = layout;
+    if (!(nbLgRows > 0 && lnLgRows > 0)) {
+        return;
+    }
+
+    const lgRowID = `${lnLgRows}-row`;
+    const shRowID = `${lnShRows}-row`;
+
+    const pile: (SVGSVGElement|SVGGElement)[] = [svg]
+    if (nbLgRows > 1) {
+        const g = pile[0].appendChild(document.createElementNS(SVG_NS, "g"));
+        g.setAttribute("id", lgRowID);
+        pile.unshift(g);
+    }
+    if (nbShRows > 1) {
+        const g = pile[0].appendChild(document.createElementNS(SVG_NS, "g"));
+        g.setAttribute("id", shRowID);
+        pile.unshift(g);
+    }
+
+    const starPathD = getStarPath(measurements.starDiameter/2);
+
+    const starGroup = pile[0].appendChild(document.createElementNS(SVG_NS, "g"));
+    starGroup.setAttribute("id", "star");
+    const starPath = starGroup.appendChild(document.createElementNS(SVG_NS, "path"));
+    starPath.setAttribute("x", measurements.horizontalStarsMargin.toString());
+    starPath.setAttribute("y", measurements.verticalStarsMargin.toString());
+    starPath.setAttribute("d", starPathD);
+    starPath.setAttribute("fill", colors.stars);
+
+    let i;
+    if (nbShRows > 1) {
+        for (i = 1; i < lnShRows; i++) {
+            const use = pile[0].appendChild(document.createElementNS(SVG_NS, "use"));
+            use.setAttribute("href", "#star");
+            use.setAttribute("x", (measurements.horizontalStarSpacing*2*i).toString());
+        }
+        pile.shift();
+    } else {
+        i = 0;
+    }
+
+    if (nbLgRows > 1) {
+        for (let j = 0; j < lnLgRows-lnShRows; j++) {
+            const use = pile[0].appendChild(document.createElementNS(SVG_NS, "use"));
+            use.setAttribute("href", "#star");
+            use.setAttribute("x", (measurements.horizontalStarSpacing*2*(i+j+1)).toString());
+        }
+        pile.shift();
+    }
+
+    for (let k = 0; k < nbShRows; k++) {
+        const use = svg.appendChild(document.createElementNS(SVG_NS, "use"));
+        use.setAttribute("href", `#${shRowID}`);
+        use.setAttribute("x", measurements.horizontalStarSpacing.toString());
+        use.setAttribute("y", (measurements.verticalStarSpacing*(2*k+1)).toString());
+    }
+
+    for (let k = 1; k < nbLgRows; k++) {
+        const use = svg.appendChild(document.createElementNS(SVG_NS, "use"));
+        use.setAttribute("href", `#${lgRowID}`);
+        use.setAttribute("y", (measurements.verticalStarSpacing*(2*k)).toString());
+    }
 }
 
 function addCantonFromCoordinates(svg: SVGSVGElement, measurements: Measurements, starCoordinates: Iterable<[number, number]>|Map<[number, number], number>, colors: FlagColors) {
