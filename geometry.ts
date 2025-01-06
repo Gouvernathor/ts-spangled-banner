@@ -111,7 +111,7 @@ export class Measurements {
 }
 
 export function* coordinatesFromLayout(layout: Layout,
-    {nStripes = 13, proportionalStarSize = true}
+    {nStripes = 13, proportionalStarSize = true} = {},
 ) {
     const [a, b, c, d] = layout;
 
@@ -137,13 +137,13 @@ export function* coordinatesFromLayout(layout: Layout,
             // left-aligned rows
             for (let y = 0; y < a; y++) {
                 for (let x = 0; x < b; x++) {
-                    yield [relativeXMargin + 2*x * relativeXSpacing, relativeYMargin + 2*y * relativeYSpacing];
+                    yield [relativeXMargin + 2*x * relativeXSpacing, relativeYMargin + 2*y * relativeYSpacing] as const;
                 }
             }
             // right-aligned rows
             for (let y = 0; y < c; y++) {
                 for (let x = 0; x < d; x++) {
-                    yield [relativeXMargin + (2*x + 1) * relativeXSpacing, relativeYMargin + (2*y + 1) * relativeYSpacing];
+                    yield [relativeXMargin + (2*x + 1) * relativeXSpacing, relativeYMargin + (2*y + 1) * relativeYSpacing] as const;
                 }
             }
             break;
@@ -152,13 +152,13 @@ export function* coordinatesFromLayout(layout: Layout,
             // long rows
             for (let y = 0; y < a; y++) {
                 for (let x = 0; x < b; x++) {
-                    yield [relativeXMargin + 2*x * relativeXSpacing, relativeYMargin + (2*y + 1) * relativeYSpacing];
+                    yield [relativeXMargin + 2*x * relativeXSpacing, relativeYMargin + (2*y + 1) * relativeYSpacing] as const;
                 }
             }
             // short rows
             for (let y = 0; y < c; y++) {
                 for (let x = 0; x < d; x++) {
-                    yield [relativeXMargin + (2*x + 1) * relativeXSpacing, relativeYMargin + 2*y * relativeYSpacing];
+                    yield [relativeXMargin + (2*x + 1) * relativeXSpacing, relativeYMargin + 2*y * relativeYSpacing] as const;
                 }
             }
             break;
