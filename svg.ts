@@ -24,7 +24,7 @@ export function getSVGFromLayout(measurements: Measurements, layout: Layout,
 ): SVGSVGElement {
     const svg = document.createElementNS(SVG_NS, "svg");
 
-    populateHeader(svg, height, width, measurements);
+    populateHeader(svg, width, height, measurements);
     addRectStripes(svg, measurements, colors);
     // use of addCantonFromLayout possible here
     addCantonFromCoordinates(svg, measurements, new Set(coordinatesFromLayout(layout)) as Iterable<[number, number]>, colors);
@@ -37,14 +37,14 @@ export function getSVGFromStarCoordinates(measurements: Measurements, starCoordi
 ): SVGSVGElement {
     const svg = document.createElementNS(SVG_NS, "svg");
 
-    populateHeader(svg, height, width, measurements);
+    populateHeader(svg, width, height, measurements);
     addRectStripes(svg, measurements, colors);
     addCantonFromCoordinates(svg, measurements, starCoordinates, colors);
 
     return svg;
 }
 
-function populateHeader(svg: SVGSVGElement, height: number|string|undefined, width: number|string|undefined, measurements: Measurements) {
+function populateHeader(svg: SVGSVGElement, width: number|string|undefined, height: number|string|undefined, measurements: Measurements) {
     svg.setAttribute("xmlns", SVG_NS);
     // svg.setAttribute("version", "1.1");
 
