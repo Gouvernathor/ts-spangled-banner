@@ -3,10 +3,10 @@ import { Layout } from "./stars";
 
 export class FlagColors {
     public constructor(
-        public outerStripes: string,
-        public innerStripes: string,
-        public canton: string,
-        public stars: string = innerStripes,
+        public readonly outerStripes: string,
+        public readonly innerStripes: string,
+        public readonly canton: string,
+        public readonly stars: string = innerStripes,
     ) {}
 }
 

@@ -101,7 +101,7 @@ export namespace LayoutKind {
  *
  * If kinds is not None, only the layouts of those kinds are returned.
  */
-export function* generateStarLayouts(nStars: number, {kinds}: {kinds: LayoutKind[]|undefined}) {
+export function* generateStarLayouts(nStars: number, {kinds}: {kinds?: LayoutKind[]} = {}) {
     const kindsIsUndefined = kinds === undefined;
     if (!kindsIsUndefined) {
         kinds = [];

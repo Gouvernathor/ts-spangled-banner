@@ -2,17 +2,16 @@ import { DEFAULT_LAYOUT, Layout, LayoutKind } from "./stars";
 
 export class Measurements {
     public constructor(
-        public height: number,
-        public width: number,
-        public cantonHeight: number,
-        public cantonWidth: number,
-        public verticalStarsMargin: number,
-        public verticalStarSpacing: number,
-        public horizontalStarsMargin: number,
-        public horizontalStarSpacing: number,
-        public starDiameter: number,
-        public stripeHeight: number,
-        private isNormalized = false,
+        public readonly height: number,
+        public readonly width: number,
+        public readonly cantonHeight: number,
+        public readonly cantonWidth: number,
+        public readonly verticalStarsMargin: number,
+        public readonly verticalStarSpacing: number,
+        public readonly horizontalStarsMargin: number,
+        public readonly horizontalStarSpacing: number,
+        public readonly starDiameter: number,
+        public readonly stripeHeight: number,
     ) {}
 
     public check() {
