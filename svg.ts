@@ -134,22 +134,20 @@ function addCantonFromCoordinates(svg: SVGSVGElement, measurements: Measurements
 }
 
 function getStarPath(radius: number) {
-    const [top, topright, bottomright, bottomleft, topleft] =
-        Array.from({length: 5}, (_, k) => [Math.cos(3*Math.PI/2 + k*2*Math.PI/5), Math.sin(3*Math.PI/2 + k*2*Math.PI/5)]);
-
-    function c(x: number) {
-        return radius*x;
-    }
+    const [top, topright, bottomright, bottomleft, topleft] = Array.from({length: 5}, (_, k) => {
+        const angle = 3*Math.PI/2 + k*2*Math.PI/5;
+        return [Math.cos(angle), Math.sin(angle)];
+    });
 
     const
-        initialY = c(top[1]),
-        firstMoveX = c(bottomright[0]-top[0]),
-        firstMoveY = c(bottomright[1]-top[1]),
-        secondMoveX = c(topleft[0]-bottomright[0]),
-        secondMoveY = c(topleft[1]-bottomright[1]),
-        thirdMoveX = c(topright[0]-topleft[0]),
-        fourthMoveX = c(bottomleft[0]-topright[0]),
-        fourthMoveY = c(bottomleft[1]-topright[1]);
+        initialY = radius * (top[1]),
+        firstMoveX = radius * (bottomright[0]-top[0]),
+        firstMoveY = radius * (bottomright[1]-top[1]),
+        secondMoveX = radius * (topleft[0]-bottomright[0]),
+        secondMoveY = radius * (topleft[1]-bottomright[1]),
+        thirdMoveX = radius * (topright[0]-topleft[0]),
+        fourthMoveX = radius * (bottomleft[0]-topright[0]),
+        fourthMoveY = radius * (bottomleft[1]-topright[1]);
     return [
         `m 0,${initialY}`,
         `l ${firstMoveX},${firstMoveY}`,
