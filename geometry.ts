@@ -45,21 +45,20 @@ export class Measurements {
         const D = B * 2/5;
         let E: number, F: number, G: number, H: number;
         if (kindIsGrid) {
-            H = D / (b+d+1/3);
-            G = 2/3 * H;
             F = C / (a+c+1/3);
             E = 2/3 * F;
+            H = D / (b+d+1/3);
+            G = 2/3 * H;
         } else {
             E = F = C / (a+c+1);
             G = H = D / (b+d+1);
         }
 
         const L = A / nStripes;
-        let K: number;
-        if (proportionalStarSize) {
+        const K = proportionalStarSize ?
             // take the closest distance between two stars
             // times a compat factor (so that the 50-star flag remains the same)
-            const dists: number[] = kindIsGrid ?
+            Math.min(...(kindIsGrid ?
                 [
                     D / (b+1),
                     C / (a+1),
@@ -69,17 +68,15 @@ export class Measurements {
                     2 * D / (b + d + 1),
                     2 * C / (a + c + 1),
                     Math.sqrt((D/(b+d+1))**2 + (C/(a+c+1))**2),
-                ];
-            // magic constants lowered from Python, to keep under 2**53
-            K = 6633010231827852 / 8960234537720383 * Math.min(...dists);
-        } else {
-            K = L * 4/5;
-        }
+                ])) * 6633010231827852 / 8960234537720383 :
+                // magic constants lowered from the Python version, to keep under 2**53
+            L * 4/5;
 
         return new Measurements(A, B, C, D, E, F, G, H, K, L);
     }
 }
 
+// nStripes determines the size of the canton
 export function* coordinatesFromLayout(layout: Layout,
     {nStripes = 13, proportionalStarSize = true} = {},
 ) {
