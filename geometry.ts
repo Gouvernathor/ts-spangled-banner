@@ -30,35 +30,6 @@ export class Measurements {
     }
 
     /**
-     * Builds a version only using integers, chosen to be the smallest integers possible
-     * while keeping the same ratios between all values.
-     * The goal is to remove use of the Fraction type, while avoiding any use
-     * of floating point numbers which would expose the calculations to rounding errors.
-     *
-     * The star diameter value's precision will be reduced to make all returned values
-     * lower than max_value. Values may be higher than max_value if reducing the star
-     * diameter's precision is not enough, or if reducing it too much would nullify it.
-     * If more_precise is False, the star diameter will be directly rounded once,
-     * whereas if it is True, the star diameter will be rounded just enough
-     * to fit the constraints.
-     */
-    public normalize({morePrecise = true, maxValue = 10**7}): Measurements {
-        if (this.isNormalized) {
-            return this;
-        }
-
-        const maxLCMValue = maxValue / Math.max(
-            this.height, this.width,
-            this.cantonHeight, this.cantonWidth,
-            this.verticalStarsMargin, this.verticalStarSpacing,
-            this.horizontalStarsMargin, this.horizontalStarSpacing,
-            this.starDiameter, this.stripeHeight);
-
-        // let varLCM = lcm()
-        throw new Error("Not implemented");
-    }
-
-    /**
      * Generates the government specifications for the flag.
      */
     public static generate({
