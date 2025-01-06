@@ -1,5 +1,5 @@
 type Comparable = number;
-type Layout = [number, number, number, number];
+export type Layout = [number, number, number, number];
 
 function optimizeLayout(layout: Layout, cantonFactor: number): Comparable {
     const [a, b, c, d] = layout;
@@ -9,7 +9,7 @@ function optimizeLayout(layout: Layout, cantonFactor: number): Comparable {
     return Math.abs((a + c + 1) * cantonFactor - (b + d + 1));
 }
 
-export const DEFAULT_LAYOUT = [5, 6, 4, 5];
+export const DEFAULT_LAYOUT: Layout = [5, 6, 4, 5];
 
 export enum LayoutKind {
     /*
