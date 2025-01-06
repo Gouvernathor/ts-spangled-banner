@@ -1,0 +1,78 @@
+{
+  "name": "star-spangled-banner",
+  "version": "1.0.0",
+  "description": "Generator of customizable SVG displays of the US flag",
+  "type": "module",
+  "main": "./dist/main.js",
+  "types": "./dist/main.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/main.d.ts",
+        "default": "./dist/main.js"
+      },
+      "require": {
+        "types": "./dist/main.d.cts",
+        "default": "./dist/main.cjs"
+      }
+    },
+    "./stars": {
+      "import": {
+        "types": "./dist/stars.d.ts",
+        "default": "./dist/stars.js"
+      },
+      "require": {
+        "types": "./dist/stars.d.cts",
+        "default": "./dist/stars.cjs"
+      }
+    },
+    "./geometry": {
+      "import": {
+        "types": "./dist/geometry.d.ts",
+        "default": "./dist/geometry.js"
+      },
+      "require": {
+        "types": "./dist/geometry.d.cts",
+        "default": "./dist/geometry.cjs"
+      }
+    },
+    "./svg": {
+      "import": {
+        "types": "./dist/svg.d.ts",
+        "default": "./dist/svg.js"
+      },
+      "require": {
+        "types": "./dist/svg.d.cts",
+        "default": "./dist/svg.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gouvernathor/ts-spangled-banner.git"
+  },
+  "keywords": [
+    "flag",
+    "svg",
+    "usa"
+  ],
+  "author": "Gouvernathor",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/Gouvernathor/ts-spangled-banner/issues"
+  },
+  "homepage": "https://github.com/Gouvernathor/ts-spangled-banner#readme",
+  "funding": "https://ko-fi.com/gouvernathor",
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsup": "^8.3.5",
+    "typescript": "*"
+  }
+}
