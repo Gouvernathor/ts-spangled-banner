@@ -28,31 +28,31 @@ This is only a TypeScript type, not appearing in JS. It is equal to `[number, nu
 
   This is a string enum of the possible kinds of layouts for the stars in the canton.
 
-  `GRID`
+  `LayoutKind.GRID`
 
   The stars are arranged in a grid, like the 24-star "Old Glory" flag, or the 48-star flag.
 
-  `SHORT_SANDWICH`
+  `LayoutKind.SHORT_SANDWICH`
 
   Each shorter row of stars is between two longer rows, like the 50-star flag. It can be seen as two grids, one inside the other.
 
-  `LONG_SANDWICH`
+  `LayoutKind.LONG_SANDWICH`
 
   Each longer row of stars is between two shorter rows. It looks like a rectangle with the corners cut off.
 
-  `PAGODA`
+  `LayoutKind.PAGODA`
 
   Each longer row of stars is followed by a shorter row, like the 45-star flag. It looks like a rectangle with two corners on the same long side cut off. (This module will always cut off the corners of the bottom side.)
 
-  `SIDE_PAGODA`
+  `LayoutKind.SIDE_PAGODA`
 
   The rows are all of the same length and there is an odd number of them, like the short-lived 49-star flag. Each longer column of stars is followed by a shorter column, and it looks like a rectangle with two corners on the same short side cut off, making it similar to the pagoda layout but on the side. (This module will always cut off the corners of the right side.)
 
-  `CUBE`
+  `LayoutKind.CUBE`
 
   The rows are all of the same length and there is an even number of them. It looks like a rectangle with two opposite corners cut off. (This module will always cut the top-right and bottom-left corners.)
 
-  `from_layout(layout: Layout): LayoutKind`
+  `LayoutKind.from_layout(layout: Layout): LayoutKind`
 
   This static method computes the layout kind from a given layout.
 
@@ -84,7 +84,7 @@ These are found in the `star-spangled-banner/geometry` module. This submodule ge
 
   The constructor takes 10 parameters, all numbers in the same unit : `height`, `width`, `canton_height`, `canton_width`, `vertical_stars_margin`, `vertical_star_spacing`, `horizontal_stars_margin`, `horizontal_star_spacing`, `star_diameter` and `stripe_height`. They are available as attributes. `Measurements` instances are read-only and immutable.
 
-  `generate({stars_layout: Layout = stars.DEFAULT_LAYOUT, nStripes: number = 13, proportionalStarSize: boolean = true}) -> Measurements`
+  `Measurements.generate({stars_layout: Layout = stars.DEFAULT_LAYOUT, nStripes: number = 13, proportionalStarSize: boolean = true}) -> Measurements`
 
   This static method generates the specifications for a flag with the given layout (which includes the number of stars) and number of stripes. The `proportionalStarSize` parameter enables the star size to be scaled to fit best, in a way which makes the 50-star flag same as the official specifications. If false, the stars keep the same size as the 50-star flag regardless of the number of stars.
 
@@ -100,19 +100,19 @@ These are found in the `star-spangled-banner/svg` module. This submodule generat
 
   This is a class that holds the colors of a flag, stored as strings as supported by CSS. Instances are immutable, parameters are in the order the read-only attributes are documented:
 
-  `outerStripes`
+  `FlagColors.outerStripes`
 
   The color of the outer stripes, which are red in the official flag.
 
-  `innerStripes`
+  `FlagColors.innerStripes`
 
   The color of the inner stripes, which are white in the official flag.
 
-  `canton`
+  `FlagColors.canton`
 
   The color of the canton, which is blue in the official flag.
 
-  `stars`
+  `FlagColors.stars`
 
   The color of the stars, which defaults to the value of innerStripes.
 
@@ -120,9 +120,9 @@ These are found in the `star-spangled-banner/svg` module. This submodule generat
 
   This is an enumeration (though not a TypeScript enum) of built-in FlagColors presets.
 
-  `DEFAULT` : the official colors
+  `FlagPalette.DEFAULT` : the official colors
 
-  `SATURATED` : the most saturated red, white and blue colors
+  `FlagPalette.SATURATED` : the most saturated red, white and blue colors
 
 `getSvgFromLayout(measurements: Measurements, layout: Layout, {width?: number|string, height?: number|string, colors: FlagColors = FlagPalette.DEFAULT})`
 
