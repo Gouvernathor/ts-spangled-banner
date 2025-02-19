@@ -99,12 +99,12 @@ export namespace LayoutKind {
  *
  * In any such case, the number of rows is a + c and the number of columns is b + d.
  *
- * If kinds is not None, only the layouts of those kinds are returned.
+ * If kinds is passed, only the layouts of those kinds are returned.
  */
 export function* generateStarLayouts(nStars: number, {kinds}: {kinds?: LayoutKind[]} = {}) {
     const kindsIsUndefined = kinds === undefined;
     if (!kindsIsUndefined) {
-        kinds = [];
+        // kinds = [];
         // TODO: list of all the kinds
         // TODO: decide if supporting casefold or not (presumably using toLowerCase)
     }
