@@ -88,7 +88,7 @@ function addRectStripes(svg: SVGSVGElement, measurements: Measurements, colors: 
     let stripeID = `short_${whiteID}`;
     for (let iStripe = 0; iStripe < nbWhiteStripes; iStripe++) {
         if (iStripe >= nbShortWhiteStripes) {
-            stripeID = `short_${whiteID}`;
+            stripeID = `long_${whiteID}`;
         }
         const use = svg.appendChild(document.createElementNS(SVG_NS, "use"));
         use.setAttribute("href", `#${stripeID}`);
