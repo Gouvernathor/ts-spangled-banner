@@ -1,5 +1,5 @@
-import { coordinatesFromLayout, Measurements } from "./geometry";
-import { Layout } from "./stars";
+import { coordinatesFromLayout, Measurements } from "./geometry.js";
+import { Layout } from "./stars.js";
 
 export class FlagColors {
     public constructor(
@@ -96,7 +96,9 @@ function addRectStripes(svg: SVGSVGElement, measurements: Measurements, colors: 
     }
 }
 
+// @ts-expect-error
 function addCantonFromLayout(svg: SVGSVGElement, measurements: Measurements, layout: Layout, colors: FlagColors) {
+    // @ts-expect-error
     const canton = svg.appendChild(document.createElementNS(SVG_NS, "rect"));
 
     const [nbLgRows, lnLgRows, nbShRows, lnShRows] = layout;
@@ -109,19 +111,19 @@ function addCantonFromLayout(svg: SVGSVGElement, measurements: Measurements, lay
 
     const pile: (SVGSVGElement|SVGGElement)[] = [svg]
     if (nbLgRows > 1) {
-        const g = pile[0].appendChild(document.createElementNS(SVG_NS, "g"));
+        const g = pile[0]!.appendChild(document.createElementNS(SVG_NS, "g"));
         g.setAttribute("id", lgRowID);
         pile.unshift(g);
     }
     if (nbShRows > 1) {
-        const g = pile[0].appendChild(document.createElementNS(SVG_NS, "g"));
+        const g = pile[0]!.appendChild(document.createElementNS(SVG_NS, "g"));
         g.setAttribute("id", shRowID);
         pile.unshift(g);
     }
 
     const starPathD = getStarPath(measurements.starDiameter/2);
 
-    const starGroup = pile[0].appendChild(document.createElementNS(SVG_NS, "g"));
+    const starGroup = pile[0]!.appendChild(document.createElementNS(SVG_NS, "g"));
     starGroup.setAttribute("id", "star");
     const starPath = starGroup.appendChild(document.createElementNS(SVG_NS, "path"));
     starPath.setAttribute("x", measurements.horizontalStarsMargin.toString());
@@ -132,7 +134,7 @@ function addCantonFromLayout(svg: SVGSVGElement, measurements: Measurements, lay
     let i;
     if (nbShRows > 1) {
         for (i = 1; i < lnShRows; i++) {
-            const use = pile[0].appendChild(document.createElementNS(SVG_NS, "use"));
+            const use = pile[0]!.appendChild(document.createElementNS(SVG_NS, "use"));
             use.setAttribute("href", "#star");
             use.setAttribute("x", (measurements.horizontalStarSpacing*2*i).toString());
         }
@@ -143,7 +145,7 @@ function addCantonFromLayout(svg: SVGSVGElement, measurements: Measurements, lay
 
     if (nbLgRows > 1) {
         for (let j = 0; j < lnLgRows-lnShRows; j++) {
-            const use = pile[0].appendChild(document.createElementNS(SVG_NS, "use"));
+            const use = pile[0]!.appendChild(document.createElementNS(SVG_NS, "use"));
             use.setAttribute("href", "#star");
             use.setAttribute("x", (measurements.horizontalStarSpacing*2*(i+j+1)).toString());
         }
@@ -200,18 +202,18 @@ function addCantonFromCoordinates(svg: SVGSVGElement, measurements: Measurements
 function getStarPath(radius: number) {
     const [top, topright, bottomright, bottomleft, topleft] = Array.from({length: 5}, (_, k) => {
         const angle = 3*Math.PI/2 + k*2*Math.PI/5;
-        return [Math.cos(angle), Math.sin(angle)];
+        return [Math.cos(angle), Math.sin(angle)] as const;
     });
 
     const
-        initialY = radius * (top[1]),
-        firstMoveX = radius * (bottomright[0]-top[0]),
-        firstMoveY = radius * (bottomright[1]-top[1]),
-        secondMoveX = radius * (topleft[0]-bottomright[0]),
-        secondMoveY = radius * (topleft[1]-bottomright[1]),
-        thirdMoveX = radius * (topright[0]-topleft[0]),
-        fourthMoveX = radius * (bottomleft[0]-topright[0]),
-        fourthMoveY = radius * (bottomleft[1]-topright[1]);
+        initialY = radius * (top![1]),
+        firstMoveX = radius * (bottomright![0]-top![0]),
+        firstMoveY = radius * (bottomright![1]-top![1]),
+        secondMoveX = radius * (topleft![0]-bottomright![0]),
+        secondMoveY = radius * (topleft![1]-bottomright![1]),
+        thirdMoveX = radius * (topright![0]-topleft![0]),
+        fourthMoveX = radius * (bottomleft![0]-topright![0]),
+        fourthMoveY = radius * (bottomleft![1]-topright![1]);
     return [
         `m 0,${initialY}`,
         `l ${firstMoveX},${firstMoveY}`,

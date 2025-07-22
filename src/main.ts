@@ -1,6 +1,6 @@
-import { Measurements } from "./geometry";
-import { findBestStarLayout, LayoutKind } from "./stars";
-import { FlagColors, getSVGFromLayout } from "./svg";
+import { Measurements } from "./geometry.js";
+import { findBestStarLayout, LayoutKind } from "./stars.js";
+import { FlagColors, getSVGFromLayout } from "./svg.js";
 
 export function getSVG(nStars: number,
     FBSLParams?: {cantonFactor?: number, kinds?: LayoutKind[]},

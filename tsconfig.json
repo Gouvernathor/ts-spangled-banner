@@ -1,11 +1,16 @@
 {
+    "extends": "@tsconfig/strictest/tsconfig.json",
     "compilerOptions": {
         "target": "ES2019",
-        "module": "Preserve",
+        "module": "preserve",
+
+        "rootDir": "src",
+        "outDir": "dist",
         "sourceMap": true,
-        "outDir": "out",
-        "strict": true,
-        "noImplicitOverride": true,
-        "noImplicitReturns": true,
+
+        "preserveConstEnums": false,
+        "declaration": true,
+        "isolatedModules": false,
     },
+    "include": ["src"],
 }

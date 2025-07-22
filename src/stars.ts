@@ -101,7 +101,7 @@ export namespace LayoutKind {
  *
  * If kinds is passed, only the layouts of those kinds are returned.
  */
-export function* generateStarLayouts(nStars: number, {kinds}: {kinds?: LayoutKind[]} = {}) {
+export function* generateStarLayouts(nStars: number, {kinds}: {kinds?: LayoutKind[]|undefined} = {}) {
     const kindsIsUndefined = kinds === undefined;
     if (!kindsIsUndefined) {
         // kinds = [];
@@ -177,5 +177,5 @@ export function findBestStarLayouts(nStars: number,
     return new Map(
         Array.from(generateStarLayouts(nStars, {kinds}))
             .map(l => [l, optimizeLayout(l, cantonFactor)] as const)
-            .sort(([l1, c1], [l2, c2]) => c1-c2));
+            .sort(([_l1, c1], [_l2, c2]) => c1-c2));
 }

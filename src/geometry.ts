@@ -1,4 +1,4 @@
-import { DEFAULT_LAYOUT, Layout, LayoutKind } from "./stars";
+import { DEFAULT_LAYOUT, Layout, LayoutKind } from "./stars.js";
 
 export class Measurements {
     public constructor(
