@@ -29,6 +29,9 @@ export enum LayoutKind {
      * Each longer row of stars is between two shorter rows.
      *
      * It looks like a rectangle with the corners cut off.
+     *
+     * (The pair of numbers that represent the longer rows is put first,
+     * even though the first row is one of the shorter ones.)
      */
     LONG_SANDWICH = "LONG_SANDWICH",
 
