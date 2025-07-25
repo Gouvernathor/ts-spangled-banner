@@ -153,6 +153,20 @@ describe("The stars arrangement system", () => {
                 expect(() => findBestStarLayout(50, { kinds: [LayoutKind.LONG_SANDWICH] }))
                     .toThrow();
             });
+
+            it("should optimize on the layout factor if specified", () => {
+                // very horizontal layout
+                expect(findBestStarLayout(randomNumberOfStars, { cantonFactor: randomNumberOfStars*2 }))
+                    .toEqual([1, randomNumberOfStars, 0, 0]);
+                // very vertical layout
+                expect(findBestStarLayout(randomNumberOfStars, { cantonFactor: 1/(randomNumberOfStars*2) }))
+                    .toEqual([randomNumberOfStars, 1, 0, 0]);
+
+                expect(findBestStarLayout(50, { cantonFactor: 247/175 }))
+                    .toEqual([5, 6, 4, 5]);
+                expect(findBestStarLayout(50, { cantonFactor: .7 }))
+                    .toEqual([6, 5, 5, 4]);
+            });
         });
     });
 });
