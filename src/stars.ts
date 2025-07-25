@@ -12,46 +12,54 @@ function optimizeLayout(layout: Layout, cantonFactor: number): Comparable {
 export const DEFAULT_LAYOUT: Layout = [5, 6, 4, 5];
 
 export enum LayoutKind {
-    /*
-    The stars are arranged in a grid,
-    like the 24-star "Old Glory" flag, or the 48-star flag.
-    */
+    /**
+     * The stars are arranged in a grid,
+     * like the 24-star "Old Glory" flag, or the 48-star flag.
+     */
     GRID = "GRID",
 
-    /*
-    Each shorter row of stars is between two longer rows, like the 50-star flag.
-    It can be seen as two grids, one inside the other.
-    */
+    /**
+     * Each shorter row of stars is between two longer rows, like the 50-star flag.
+     *
+     * It can be seen as two grids, one inside the other.
+     */
     SHORT_SANDWICH = "SHORT_SANDWICH",
 
-    /*
-    Each longer row of stars is between two shorter rows.
-    It looks like a rectangle with the corners cut off.
-    */
+    /**
+     * Each longer row of stars is between two shorter rows.
+     *
+     * It looks like a rectangle with the corners cut off.
+     */
     LONG_SANDWICH = "LONG_SANDWICH",
 
-    /*
-    Each longer row of stars is followed by a shorter row, like the 45-star flag.
-    It looks like a rectangle with two corners on the same long side cut off.
-    (This module will always cut off the corners of the bottom side.)
-    */
+    /**
+     * Each longer row of stars is followed by a shorter row, like the 45-star flag.
+     *
+     * It looks like a rectangle with two corners on the same long side cut off.
+     *
+     * (This module will always cut off the corners of the bottom side.)
+     */
     PAGODA = "PAGODA",
 
-    /*
-    The rows are all of the same length and there is an odd number of them,
-    like the short-lived 49-star flag.
-    Each longer column of stars is followed by a shorter column,
-    and it looks like a rectangle with two corners on the same short side cut off,
-    making it similar to the pagoda layout but on the side.
-    (This module will always cut off the corners of the right side.)
-    */
+    /**
+     * The rows are all of the same length and there is an odd number of them,
+     * like the short-lived 49-star flag.
+     *
+     * Each longer column of stars is followed by a shorter column,
+     * and it looks like a rectangle with two corners on the same short side cut off,
+     * making it similar to the pagoda layout but on the side.
+     *
+     * (This module will always cut off the corners of the right side.)
+     */
     SIDE_PAGODA = "SIDE_PAGODA",
 
-    /*
-    The rows are all of the same length and there is an even number of them.
-    It looks like a rectangle with two opposite corners cut off.
-    (This module will always cut the top-right and bottom-left corners.)
-    */
+    /**
+     * The rows are all of the same length and there is an even number of them.
+     *
+     * It looks like a rectangle with two opposite corners cut off.
+     *
+     * (This module will always cut the top-right and bottom-left corners.)
+     */
     CUBE = "CUBE",
 }
 
