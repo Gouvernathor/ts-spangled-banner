@@ -1,6 +1,15 @@
-type Comparable = number;
+/**
+ * A layout is a tuple of four numbers, representing the number and size of star rows in the canton.
+ *
+ * The first two numbers describe the longer, wider rows of stars,
+ * even when the first row is not one of the longer ones.
+ *
+ * For each pair of numbers, the first is the number of rows and the second is the number of stars in each row.
+ * When all the rows are of the same length, the third and fourth numbers are zero.
+ */
 export type Layout = [number, number, number, number];
 
+type Comparable = number;
 function optimizeLayout(layout: Layout, cantonFactor: number): Comparable {
     const [a, b, c, d] = layout;
     if (!((c === 0) === (d === 0))) {
