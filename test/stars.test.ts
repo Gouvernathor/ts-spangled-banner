@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { DEFAULT_LAYOUT, generateStarLayouts, Layout, LayoutKind } from "../src/stars";
+import { DEFAULT_LAYOUT, findBestStarLayout, generateStarLayouts, Layout, LayoutKind } from "../src/stars";
+
+function countStars([a, b, c, d]: Layout): number {
+    return a*b + c*d;
+}
 
 describe("The stars arrangement system", () => {
     describe("The default layout", () => {
@@ -58,24 +62,24 @@ describe("The stars arrangement system", () => {
     });
 
     describe("The layout generators", () => {
+        const randomNumberOfStars = Math.floor(Math.random() * 100) + 1;
+
         describe("generateStarLayouts", () => {
             it("should generate all the possible star layouts", () => {
                 expect(Array.from(generateStarLayouts(50))).toHaveLength(17);
                 expect(Array.from(generateStarLayouts(67))).toHaveLength(12);
             });
 
-            const numberOfStars = Math.floor(Math.random() * 100) + 1;
-
             it("should only generate valid layouts", () => {
-                expect(() => Array.from(generateStarLayouts(numberOfStars), LayoutKind.fromLayout))
-                .not.toThrow();
+                expect(() => Array.from(generateStarLayouts(randomNumberOfStars), LayoutKind.fromLayout))
+                    .not.toThrow();
             });
 
             it("should only generate layouts of the specified star count", () => {
-                function countStars([a, b, c, d]: Layout): number {
-                    return a*b + c*d;
-                }
-                expect(Array.from(generateStarLayouts(numberOfStars), countStars).every(n => n === numberOfStars))
+                expect(Array.from(generateStarLayouts(randomNumberOfStars), countStars).every(n => n === randomNumberOfStars))
+                    .toBeTruthy();
+
+                expect(Array.from(generateStarLayouts(50), countStars).every(n => n === 50))
                     .toBeTruthy();
             });
 
@@ -124,6 +128,30 @@ describe("The stars arrangement system", () => {
                     expect(new Set(Array.from(generateStarLayouts(60, {kinds: subArray}), LayoutKind.fromLayout)))
                         .toEqual(new Set(subArray));
                 }
+            });
+        });
+
+        describe("findBestStarLayout", () => {
+            it("should return the best layout for a given number of stars", () => {
+                expect(findBestStarLayout(50))
+                    .toEqual([5, 6, 4, 5]);
+                expect(findBestStarLayout(69))
+                    .toEqual([3, 12, 3, 11]);
+            });
+
+            expect(() => findBestStarLayout(0))
+                .toThrow();
+
+            it("should only generate layouts of the specified star count", () => {
+                expect(countStars(findBestStarLayout(randomNumberOfStars)))
+                    .toBe(randomNumberOfStars);
+            });
+
+            it("should only find layouts of the specified kinds", () => {
+                expect(findBestStarLayout(50, { kinds: [LayoutKind.SHORT_SANDWICH] }))
+                    .toEqual([5, 6, 4, 5]);
+                expect(() => findBestStarLayout(50, { kinds: [LayoutKind.LONG_SANDWICH] }))
+                    .toThrow();
             });
         });
     });
