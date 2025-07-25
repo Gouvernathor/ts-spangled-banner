@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { DEFAULT_LAYOUT, LayoutKind } from "../src/stars";
+import { DEFAULT_LAYOUT, generateStarLayouts, Layout, LayoutKind } from "../src/stars";
 
 describe("The stars arrangement system", () => {
     describe("The default layout", () => {
@@ -54,6 +54,77 @@ describe("The stars arrangement system", () => {
             // 50
             expect(LayoutKind.fromLayout([5, 6, 4, 5]))
                 .toBe(LayoutKind.SHORT_SANDWICH);
+        });
+    });
+
+    describe("The layout generators", () => {
+        describe("generateStarLayouts", () => {
+            it("should generate all the possible star layouts", () => {
+                expect(Array.from(generateStarLayouts(50))).toHaveLength(17);
+                expect(Array.from(generateStarLayouts(67))).toHaveLength(12);
+            });
+
+            const numberOfStars = Math.floor(Math.random() * 100) + 1;
+
+            it("should only generate valid layouts", () => {
+                expect(() => Array.from(generateStarLayouts(numberOfStars), LayoutKind.fromLayout))
+                .not.toThrow();
+            });
+
+            it("should only generate layouts of the specified star count", () => {
+                function countStars([a, b, c, d]: Layout): number {
+                    return a*b + c*d;
+                }
+                expect(Array.from(generateStarLayouts(numberOfStars), countStars).every(n => n === numberOfStars))
+                    .toBeTruthy();
+            });
+
+            // TODO maybe move to an utils module
+            function* mapIterator<T, U>(iterable: Iterable<T>, fn: (value: T, index: number) => U): Iterable<U> {
+                let i = 0;
+                for (const value of iterable) {
+                    yield fn(value, i++);
+                }
+            }
+            function* filterIterator<T>(iterable: Iterable<T>, predicate: (value: T, index: number) => boolean): Iterable<T> {
+                let i = 0;
+                for (const value of iterable) {
+                    if (predicate(value, i++)) {
+                        yield value;
+                    }
+                }
+            }
+            /**
+             * Generates all the possible sub-arrays of 0 to all the members passed,
+             * in the order of the original array.
+             */
+            function* generateCombinations<T>(arr: readonly T[]): Iterable<T[]> {
+                const n = arr.length;
+                yield [];
+                if (n > 0) {
+                    for (let i = 0; i < n; i++) {
+                        yield* mapIterator(
+                            generateCombinations(
+                                // arr.filter((_, j) => j !== i)),
+                                arr.filter((_, j) => j < i)),
+                            (subArr) => subArr.concat(arr[i]));
+                    }
+                }
+            }
+            it("should only generate layouts of the specified kind", () => {
+                expect(new Set(Array.from(generateStarLayouts(60, {kinds: [LayoutKind.GRID]}), LayoutKind.fromLayout)))
+                    .toEqual(new Set([LayoutKind.GRID]));
+
+                for (const subArray of generateCombinations([
+                    LayoutKind.GRID,
+                    LayoutKind.SHORT_SANDWICH, LayoutKind.LONG_SANDWICH,
+                    LayoutKind.PAGODA, LayoutKind.SIDE_PAGODA,
+                    LayoutKind.CUBE,
+                ])) {
+                    expect(new Set(Array.from(generateStarLayouts(60, {kinds: subArray}), LayoutKind.fromLayout)))
+                        .toEqual(new Set(subArray));
+                }
+            });
         });
     });
 });
