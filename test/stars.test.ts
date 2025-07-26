@@ -1,8 +1,48 @@
 import { describe, expect, it } from "vitest";
-import { DEFAULT_LAYOUT, findBestStarLayout, generateStarLayouts, Layout, LayoutKind } from "../src/stars";
+import "./vitest";
+import { DEFAULT_LAYOUT, findBestStarLayout, findBestStarLayouts, generateStarLayouts, Layout, LayoutKind } from "../src/stars";
 
 function countStars([a, b, c, d]: Layout): number {
     return a*b + c*d;
+}
+
+function* mapIterator<T, U>(iterable: Iterable<T>, fn: (value: T, index: number) => U): Iterable<U> {
+    let i = 0;
+    for (const value of iterable) {
+        yield fn(value, i++);
+    }
+}
+function* filterIterator<T>(iterable: Iterable<T>, predicate: (value: T, index: number) => boolean): Iterable<T> {
+    let i = 0;
+    for (const value of iterable) {
+        if (predicate(value, i++)) {
+            yield value;
+        }
+    }
+}
+/**
+ * Generates all the possible sub-arrays of 0 to all the members passed,
+ * in the order of the original array.
+ */
+function* generateCombinations<T>(arr: readonly T[]): Iterable<T[]> {
+    const n = arr.length;
+    yield [];
+    if (n > 0) {
+        for (let i = 0; i < n; i++) {
+            yield* mapIterator(
+                generateCombinations(
+                    // arr.filter((_, j) => j !== i)),
+                    arr.slice(0, i)),
+                (subArr) => subArr.concat(arr[i]));
+        }
+    }
+}
+
+function estimateRatioValue(layout: Layout): number {
+    return (layout[1] + layout[3] + 1) / (layout[0] + layout[2] + 1);
+}
+function factorErrorValue(layout: Layout, cantonFactor: number): number {
+    return Math.abs(estimateRatioValue(layout) - cantonFactor);
 }
 
 describe("The stars arrangement system", () => {
@@ -83,38 +123,6 @@ describe("The stars arrangement system", () => {
                     .toBeTruthy();
             });
 
-            // TODO maybe move to an utils module
-            function* mapIterator<T, U>(iterable: Iterable<T>, fn: (value: T, index: number) => U): Iterable<U> {
-                let i = 0;
-                for (const value of iterable) {
-                    yield fn(value, i++);
-                }
-            }
-            function* filterIterator<T>(iterable: Iterable<T>, predicate: (value: T, index: number) => boolean): Iterable<T> {
-                let i = 0;
-                for (const value of iterable) {
-                    if (predicate(value, i++)) {
-                        yield value;
-                    }
-                }
-            }
-            /**
-             * Generates all the possible sub-arrays of 0 to all the members passed,
-             * in the order of the original array.
-             */
-            function* generateCombinations<T>(arr: readonly T[]): Iterable<T[]> {
-                const n = arr.length;
-                yield [];
-                if (n > 0) {
-                    for (let i = 0; i < n; i++) {
-                        yield* mapIterator(
-                            generateCombinations(
-                                // arr.filter((_, j) => j !== i)),
-                                arr.filter((_, j) => j < i)),
-                            (subArr) => subArr.concat(arr[i]));
-                    }
-                }
-            }
             it("should only generate layouts of the specified kind", () => {
                 expect(new Set(Array.from(generateStarLayouts(60, {kinds: [LayoutKind.GRID]}), LayoutKind.fromLayout)))
                     .toEqual(new Set([LayoutKind.GRID]));
@@ -167,6 +175,36 @@ describe("The stars arrangement system", () => {
                 expect(findBestStarLayout(50, { cantonFactor: .7 }))
                     .toEqual([6, 5, 5, 4]);
             });
+        });
+
+        describe("findBestStarLayouts", () => {
+            it("should return the best layouts for a given number of stars", () => {
+                let bestLayouts = findBestStarLayouts(50);
+                expect(bestLayouts.size).toBe(17);
+                expect(bestLayouts).toBeSortedByMapValue();
+                let [[best]] = bestLayouts;
+                expect(best)
+                    .toEqual([5, 6, 4, 5]);
+
+                bestLayouts = findBestStarLayouts(randomNumberOfStars);
+                expect(bestLayouts).toBeSortedByMapValue();
+                expect(Array.from(bestLayouts.keys(), countStars).every(n => n === randomNumberOfStars))
+                    .toBeTruthy();
+                [[best]] = bestLayouts;
+                expect(best)
+                    .toEqual(findBestStarLayout(randomNumberOfStars));
+            });
+
+            it.skip("should order the layouts according to the passed canton factor", () => {
+                const bestLayouts = findBestStarLayouts(randomNumberOfStars, { cantonFactor: 1/(randomNumberOfStars*2) });
+                // const layoutsByRatio = Array.from(bestLayouts.keys())
+                //     .sort((a, b) => estimateRatioValue(a) - estimateRatioValue(b));
+                // expect(Array.from(bestLayouts.keys())).toEqual(layoutsByRatio);
+                const layoutToRatio = new Map(Array.from(bestLayouts.keys(), l => [l, estimateRatioValue(l)]));
+                expect(layoutToRatio).toBeSortedByMapValue();
+            });
+
+            // TODO fix last test and add some more
         });
     });
 });

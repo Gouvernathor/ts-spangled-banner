@@ -190,6 +190,8 @@ export function findBestStarLayout(nStars: number,
 
 /**
  * The keys are layout tuples, the values are arbitrary comparable values: the lower, the better it fits.
+ *
+ * The entries are already sorted by the value, so by decreasing fittingness.
  */
 export function findBestStarLayouts(nStars: number,
     {cantonFactor = DEFAULT_CANTON_FACTOR, kinds}: {cantonFactor?: number, kinds?: LayoutKind[]} = {},
