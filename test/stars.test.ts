@@ -195,6 +195,9 @@ describe("The stars arrangement system", () => {
                     .toEqual(findBestStarLayout(randomNumberOfStars));
             });
 
+            expect(findBestStarLayouts(0))
+                .toEqual(new Map());
+
             it.skip("should order the layouts according to the passed canton factor", () => {
                 const bestLayouts = findBestStarLayouts(randomNumberOfStars, { cantonFactor: 1/(randomNumberOfStars*2) });
                 // const layoutsByRatio = Array.from(bestLayouts.keys())
