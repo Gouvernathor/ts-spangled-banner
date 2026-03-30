@@ -107,7 +107,7 @@ export namespace LayoutKind {
 }
 
 export interface GSLOptions {
-    kinds: readonly LayoutKind[];
+    kinds: readonly LayoutKind[]|undefined;
 }
 
 /**
