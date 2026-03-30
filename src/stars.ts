@@ -167,11 +167,16 @@ export function* generateStarLayouts(nStars: number, { kinds }: { kinds?: readon
 
 const DEFAULT_CANTON_FACTOR = 247/175;
 
+export interface FBSLOptions {
+    cantonFactor: number;
+    kinds: readonly LayoutKind[];
+}
+
 /**
  * The optimization key makes the stars layout fit as best possible in a canton of that ratio (width over height)
  */
 export function findBestStarLayout(nStars: number,
-    { cantonFactor = DEFAULT_CANTON_FACTOR, kinds }: { cantonFactor?: number, kinds?: readonly LayoutKind[] } = {},
+    { cantonFactor = DEFAULT_CANTON_FACTOR, kinds }: Partial<Readonly<FBSLOptions>> = {},
 ): Layout {
     let minLayout: Layout|undefined;
     let minValue = Infinity;
@@ -194,7 +199,7 @@ export function findBestStarLayout(nStars: number,
  * The entries are already sorted by the value, so by decreasing fittingness.
  */
 export function findBestStarLayouts(nStars: number,
-    { cantonFactor = DEFAULT_CANTON_FACTOR, kinds }: { cantonFactor?: number, kinds?: readonly LayoutKind[] } = {},
+    { cantonFactor = DEFAULT_CANTON_FACTOR, kinds }: Partial<Readonly<FBSLOptions>> = {},
 ): ReadonlyMap<Layout, Comparable> {
     return new Map(
         Array.from(generateStarLayouts(nStars, { kinds }), l => [l, optimizeLayout(l, cantonFactor)] as const)

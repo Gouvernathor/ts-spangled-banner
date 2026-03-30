@@ -1,10 +1,8 @@
 import { Measurements } from "./geometry.js";
-import { findBestStarLayout, LayoutKind } from "./stars.js";
+import { FBSLOptions, findBestStarLayout } from "./stars.js";
 import { FlagColors, getSVGFromLayout } from "./svg.js";
 
-interface GetSVGParams {
-    cantonFactor: number;
-    kinds: LayoutKind[];
+interface GetSVGParams extends FBSLOptions {
     nStripes: number;
     proportionalStarSize: boolean;
     width: number|string;
@@ -23,12 +21,12 @@ export function getSVG(nStars: number,
  * This version is deprecated. Please use the overload with the single options object instead.
  */
 export function getSVG(nStars: number,
-    FBSLParams?: { cantonFactor?: number, kinds?: readonly LayoutKind[] },
+    FBSLParams?: Partial<Readonly<FBSLOptions>>,
     MGParams?: { nStripes?: number, proportionalStarSize?: boolean },
     GSFLParams?: { width?: number|string, height?: number|string, colors?: FlagColors },
 ): SVGSVGElement;
 export function getSVG(nStars: number,
-    FBSLParams?: { cantonFactor?: number, kinds?: readonly LayoutKind[] },
+    FBSLParams?: Partial<Readonly<FBSLOptions>>,
     MGParams?: { nStripes?: number, proportionalStarSize?: boolean },
     GSFLParams?: { width?: number|string, height?: number|string, colors?: FlagColors },
 ): SVGSVGElement {
