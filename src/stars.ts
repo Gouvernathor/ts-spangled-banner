@@ -106,6 +106,10 @@ export namespace LayoutKind {
     }
 }
 
+export interface GSLOptions {
+    kinds: readonly LayoutKind[];
+}
+
 /**
  * The results represent that a rows of b stars are interspersed with c rows of d stars.
  *
@@ -121,7 +125,7 @@ export namespace LayoutKind {
  *
  * If kinds is passed, only the layouts of those kinds are returned.
  */
-export function* generateStarLayouts(nStars: number, { kinds }: { kinds?: readonly LayoutKind[]|undefined } = {}) {
+export function* generateStarLayouts(nStars: number, { kinds }: Partial<Readonly<GSLOptions>> = {}) {
     const kindsIsUndefined = kinds === undefined;
     if (!kindsIsUndefined) {
         // kinds = [];
@@ -167,9 +171,8 @@ export function* generateStarLayouts(nStars: number, { kinds }: { kinds?: readon
 
 const DEFAULT_CANTON_FACTOR = 247/175;
 
-export interface FBSLOptions {
+export interface FBSLOptions extends GSLOptions {
     cantonFactor: number;
-    kinds: readonly LayoutKind[];
 }
 
 /**
