@@ -1,5 +1,11 @@
 import { DEFAULT_LAYOUT, Layout, LayoutKind } from "./stars.js";
 
+export interface MGOptions {
+    starLayout: Readonly<Layout>;
+    nStripes: number;
+    proportionalStarSize: boolean;
+}
+
 export class Measurements {
     public constructor(
         public readonly height: number,
@@ -35,7 +41,7 @@ export class Measurements {
         starLayout = DEFAULT_LAYOUT,
         nStripes = 13,
         proportionalStarSize = true,
-    }): Measurements {
+    }: Partial<Readonly<MGOptions>>): Measurements {
         const [a, b, c, d] = starLayout;
         const kindIsGrid = LayoutKind.fromLayout(starLayout) === LayoutKind.GRID;
 

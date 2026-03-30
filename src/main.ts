@@ -1,4 +1,4 @@
-import { Measurements } from "./geometry.js";
+import { Measurements, MGOptions } from "./geometry.js";
 import { FBSLOptions, findBestStarLayout } from "./stars.js";
 import { FlagColors, getSVGFromLayout } from "./svg.js";
 
@@ -22,12 +22,12 @@ export function getSVG(nStars: number,
  */
 export function getSVG(nStars: number,
     FBSLParams?: Partial<Readonly<FBSLOptions>>,
-    MGParams?: { nStripes?: number, proportionalStarSize?: boolean },
+    MGParams?: Partial<Readonly<Omit<MGOptions, "starLayout">>>,
     GSFLParams?: { width?: number|string, height?: number|string, colors?: FlagColors },
 ): SVGSVGElement;
 export function getSVG(nStars: number,
     FBSLParams?: Partial<Readonly<FBSLOptions>>,
-    MGParams?: { nStripes?: number, proportionalStarSize?: boolean },
+    MGParams?: Partial<Readonly<Omit<MGOptions, "starLayout">>>,
     GSFLParams?: { width?: number|string, height?: number|string, colors?: FlagColors },
 ): SVGSVGElement {
     const layout = findBestStarLayout(nStars, FBSLParams);
