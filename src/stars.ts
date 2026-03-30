@@ -197,7 +197,6 @@ export function findBestStarLayouts(nStars: number,
     { cantonFactor = DEFAULT_CANTON_FACTOR, kinds }: { cantonFactor?: number, kinds?: readonly LayoutKind[] } = {},
 ): ReadonlyMap<Layout, Comparable> {
     return new Map(
-        Array.from(generateStarLayouts(nStars, { kinds }))
-            .map(l => [l, optimizeLayout(l, cantonFactor)] as const)
+        Array.from(generateStarLayouts(nStars, { kinds }), l => [l, optimizeLayout(l, cantonFactor)] as const)
             .sort(([_l1, c1], [_l2, c2]) => c1-c2));
 }
