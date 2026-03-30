@@ -25,7 +25,9 @@ export interface GSVGOptions {
 
 const SVG_NS = "http://www.w3.org/2000/svg";
 
-export function getSVGFromLayout(measurements: Measurements, layout: Readonly<Layout>,
+export function getSVGFromLayout(
+    measurements: Measurements,
+    layout: Readonly<Layout>,
     { width, height, colors = FlagPalette.DEFAULT }: Partial<Readonly<GSVGOptions>> = {},
 ): SVGSVGElement {
     const svg = document.createElementNS(SVG_NS, "svg");
@@ -38,7 +40,9 @@ export function getSVGFromLayout(measurements: Measurements, layout: Readonly<La
     return svg;
 }
 
-export function getSVGFromStarCoordinates(measurements: Measurements, starCoordinates: readonly (readonly [number, number])[]|ReadonlyMap<readonly [number, number], number>,
+export function getSVGFromStarCoordinates(
+    measurements: Measurements,
+    starCoordinates: readonly (readonly [number, number])[] | ReadonlyMap<readonly [number, number], number>,
     { width, height, colors = FlagPalette.DEFAULT }: Partial<Readonly<GSVGOptions>> = {},
 ): SVGSVGElement {
     const svg = document.createElementNS(SVG_NS, "svg");
@@ -50,7 +54,11 @@ export function getSVGFromStarCoordinates(measurements: Measurements, starCoordi
     return svg;
 }
 
-function populateHeader(svg: SVGSVGElement, width: number|string|undefined, height: number|string|undefined, measurements: Measurements) {
+function populateHeader(svg: SVGSVGElement,
+    width: number|string|undefined,
+    height: number|string|undefined,
+    measurements: Measurements,
+) {
     svg.setAttribute("xmlns", SVG_NS);
     // svg.setAttribute("version", "1.1");
 
@@ -66,7 +74,10 @@ function populateHeader(svg: SVGSVGElement, width: number|string|undefined, heig
     svg.appendChild(new Comment("Created with ts-spangled-banner (https://github.com/Gouvernathor/ts-spangled-banner)"));
 }
 
-function addRectStripes(svg: SVGSVGElement, measurements: Measurements, colors: FlagColors) {
+function addRectStripes(svg: SVGSVGElement,
+    measurements: Measurements,
+    colors: FlagColors,
+) {
     const nbWhiteStripes = (measurements.height / measurements.stripeHeight) / 2;
     const nbShortWhiteStripes = (measurements.cantonHeight / measurements.stripeHeight) / 2;
     const whiteID = colors === FlagPalette.DEFAULT ?
@@ -103,7 +114,11 @@ function addRectStripes(svg: SVGSVGElement, measurements: Measurements, colors: 
 }
 
 // @ts-expect-error
-function addCantonFromLayout(svg: SVGSVGElement, measurements: Measurements, layout: Readonly<Layout>, colors: FlagColors) {
+function addCantonFromLayout(svg: SVGSVGElement,
+    measurements: Measurements,
+    layout: Readonly<Layout>,
+    colors: FlagColors,
+) {
     // @ts-expect-error
     const canton = svg.appendChild(document.createElementNS(SVG_NS, "rect"));
 
@@ -172,7 +187,11 @@ function addCantonFromLayout(svg: SVGSVGElement, measurements: Measurements, lay
     }
 }
 
-function addCantonFromCoordinates(svg: SVGSVGElement, measurements: Measurements, starCoordinates: Iterable<readonly [number, number]>|ReadonlyMap<readonly [number, number], number>, colors: FlagColors) {
+function addCantonFromCoordinates(svg: SVGSVGElement,
+    measurements: Measurements,
+    starCoordinates: Iterable<readonly [number, number]> | ReadonlyMap<readonly [number, number], number>,
+    colors: FlagColors,
+) {
     const canton = svg.appendChild(document.createElementNS(SVG_NS, "rect"));
     canton.setAttribute("width", measurements.cantonWidth.toString());
     canton.setAttribute("height", measurements.cantonHeight.toString());
