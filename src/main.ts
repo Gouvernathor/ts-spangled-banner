@@ -14,7 +14,7 @@ interface GetSVGParams extends FBSLOptions {
  * This is the preferred overload.
  */
 export function getSVG(nStars: number,
-    options: Partial<Readonly<GetSVGParams>>,
+    options?: Partial<Readonly<GetSVGParams>>,
 ): SVGSVGElement;
 /**
  * @deprecated
