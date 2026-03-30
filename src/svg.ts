@@ -19,7 +19,7 @@ export const FlagPalette = {
 
 const SVG_NS = "http://www.w3.org/2000/svg";
 
-export function getSVGFromLayout(measurements: Measurements, layout: Layout,
+export function getSVGFromLayout(measurements: Measurements, layout: Readonly<Layout>,
     {width, height, colors=FlagPalette.DEFAULT}: {width?: number|string, height?: number|string, colors?: FlagColors} = {},
 ): SVGSVGElement {
     const svg = document.createElementNS(SVG_NS, "svg");
@@ -27,12 +27,12 @@ export function getSVGFromLayout(measurements: Measurements, layout: Layout,
     populateHeader(svg, width, height, measurements);
     addRectStripes(svg, measurements, colors);
     // addCantonFromLayout(svg, measurements, layout, colors); // possible alternative
-    addCantonFromCoordinates(svg, measurements, new Set(coordinatesFromLayout(layout)) as Iterable<[number, number]>, colors);
+    addCantonFromCoordinates(svg, measurements, new Set(coordinatesFromLayout(layout)) as Iterable<readonly [number, number]>, colors);
 
     return svg;
 }
 
-export function getSVGFromStarCoordinates(measurements: Measurements, starCoordinates: [number, number][]|Map<[number, number], number>,
+export function getSVGFromStarCoordinates(measurements: Measurements, starCoordinates: readonly (readonly [number, number])[]|ReadonlyMap<readonly [number, number], number>,
     {width, height, colors=FlagPalette.DEFAULT}: {width?: number|string, height?: number|string, colors?: FlagColors} = {},
 ): SVGSVGElement {
     const svg = document.createElementNS(SVG_NS, "svg");
@@ -97,7 +97,7 @@ function addRectStripes(svg: SVGSVGElement, measurements: Measurements, colors: 
 }
 
 // @ts-expect-error
-function addCantonFromLayout(svg: SVGSVGElement, measurements: Measurements, layout: Layout, colors: FlagColors) {
+function addCantonFromLayout(svg: SVGSVGElement, measurements: Measurements, layout: Readonly<Layout>, colors: FlagColors) {
     // @ts-expect-error
     const canton = svg.appendChild(document.createElementNS(SVG_NS, "rect"));
 
@@ -166,7 +166,7 @@ function addCantonFromLayout(svg: SVGSVGElement, measurements: Measurements, lay
     }
 }
 
-function addCantonFromCoordinates(svg: SVGSVGElement, measurements: Measurements, starCoordinates: Iterable<[number, number]>|Map<[number, number], number>, colors: FlagColors) {
+function addCantonFromCoordinates(svg: SVGSVGElement, measurements: Measurements, starCoordinates: Iterable<readonly [number, number]>|ReadonlyMap<readonly [number, number], number>, colors: FlagColors) {
     const canton = svg.appendChild(document.createElementNS(SVG_NS, "rect"));
     canton.setAttribute("width", measurements.cantonWidth.toString());
     canton.setAttribute("height", measurements.cantonHeight.toString());

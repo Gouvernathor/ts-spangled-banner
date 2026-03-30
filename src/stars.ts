@@ -10,7 +10,7 @@
 export type Layout = [number, number, number, number];
 
 type Comparable = number;
-function optimizeLayout(layout: Layout, cantonFactor: number): Comparable {
+function optimizeLayout(layout: Readonly<Layout>, cantonFactor: number): Comparable {
     const [a, b, c, d] = layout;
     if (!((c === 0) === (d === 0))) {
         throw new Error(`Invalid layout: ${layout}`);
@@ -18,7 +18,7 @@ function optimizeLayout(layout: Layout, cantonFactor: number): Comparable {
     return Math.abs((a + c + 1) * cantonFactor - (b + d + 1));
 }
 
-export const DEFAULT_LAYOUT: Layout = [5, 6, 4, 5];
+export const DEFAULT_LAYOUT: Readonly<Layout> = [5, 6, 4, 5];
 
 export enum LayoutKind {
     /**
@@ -76,7 +76,7 @@ export enum LayoutKind {
 }
 
 export namespace LayoutKind {
-    export function fromLayout(layout: Layout): LayoutKind {
+    export function fromLayout(layout: Readonly<Layout>): LayoutKind {
         const [a, b, c, d] = layout;
 
         if ((a === 0) === (b === 0) && (c === 0) === (d === 0)) {
@@ -121,7 +121,7 @@ export namespace LayoutKind {
  *
  * If kinds is passed, only the layouts of those kinds are returned.
  */
-export function* generateStarLayouts(nStars: number, {kinds}: {kinds?: LayoutKind[]|undefined} = {}) {
+export function* generateStarLayouts(nStars: number, {kinds}: {kinds?: readonly LayoutKind[]|undefined} = {}) {
     const kindsIsUndefined = kinds === undefined;
     if (!kindsIsUndefined) {
         // kinds = [];
@@ -171,7 +171,7 @@ const DEFAULT_CANTON_FACTOR = 247/175;
  * The optimization key makes the stars layout fit as best possible in a canton of that ratio (width over height)
  */
 export function findBestStarLayout(nStars: number,
-    {cantonFactor = DEFAULT_CANTON_FACTOR, kinds}: {cantonFactor?: number, kinds?: LayoutKind[]} = {},
+    {cantonFactor = DEFAULT_CANTON_FACTOR, kinds}: {cantonFactor?: number, kinds?: readonly LayoutKind[]} = {},
 ): Layout {
     let minLayout: Layout|undefined;
     let minValue = Infinity;
@@ -194,8 +194,8 @@ export function findBestStarLayout(nStars: number,
  * The entries are already sorted by the value, so by decreasing fittingness.
  */
 export function findBestStarLayouts(nStars: number,
-    {cantonFactor = DEFAULT_CANTON_FACTOR, kinds}: {cantonFactor?: number, kinds?: LayoutKind[]} = {},
-): Map<Layout, Comparable> {
+    {cantonFactor = DEFAULT_CANTON_FACTOR, kinds}: {cantonFactor?: number, kinds?: readonly LayoutKind[]} = {},
+): ReadonlyMap<Layout, Comparable> {
     return new Map(
         Array.from(generateStarLayouts(nStars, {kinds}))
             .map(l => [l, optimizeLayout(l, cantonFactor)] as const)

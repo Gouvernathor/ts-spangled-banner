@@ -77,7 +77,7 @@ export class Measurements {
 }
 
 // nStripes determines the size of the canton
-export function* coordinatesFromLayout(layout: Layout,
+export function* coordinatesFromLayout(layout: Readonly<Layout>,
     {nStripes = 13, proportionalStarSize = true} = {},
 ) {
     const [a, b, c, d] = layout;
