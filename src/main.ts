@@ -1,13 +1,8 @@
 import { Measurements, MGOptions } from "./geometry.js";
 import { FBSLOptions, findBestStarLayout } from "./stars.js";
-import { FlagColors, getSVGFromLayout, GSVGOptions } from "./svg.js";
+import { getSVGFromLayout, GSVGOptions } from "./svg.js";
 
 interface GetSVGParams extends FBSLOptions, Omit<MGOptions, "starLayout">, GSVGOptions {
-    nStripes: number;
-    proportionalStarSize: boolean;
-    width: number|string;
-    height: number|string;
-    colors: FlagColors;
 }
 
 /**
