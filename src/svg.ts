@@ -17,10 +17,16 @@ export const FlagPalette = {
     BLACK_AND_GREY: new FlagColors("#000000", "#888888", "#000000"),
 };
 
+export interface GSVGOptions {
+    width: number|string;
+    height: number|string;
+    colors: FlagColors;
+}
+
 const SVG_NS = "http://www.w3.org/2000/svg";
 
 export function getSVGFromLayout(measurements: Measurements, layout: Readonly<Layout>,
-    { width, height, colors=FlagPalette.DEFAULT }: { width?: number|string, height?: number|string, colors?: FlagColors } = {},
+    { width, height, colors = FlagPalette.DEFAULT }: Partial<Readonly<GSVGOptions>> = {},
 ): SVGSVGElement {
     const svg = document.createElementNS(SVG_NS, "svg");
 
@@ -33,7 +39,7 @@ export function getSVGFromLayout(measurements: Measurements, layout: Readonly<La
 }
 
 export function getSVGFromStarCoordinates(measurements: Measurements, starCoordinates: readonly (readonly [number, number])[]|ReadonlyMap<readonly [number, number], number>,
-    { width, height, colors=FlagPalette.DEFAULT }: { width?: number|string, height?: number|string, colors?: FlagColors } = {},
+    { width, height, colors = FlagPalette.DEFAULT }: Partial<Readonly<GSVGOptions>> = {},
 ): SVGSVGElement {
     const svg = document.createElementNS(SVG_NS, "svg");
 
