@@ -121,7 +121,7 @@ export namespace LayoutKind {
  *
  * If kinds is passed, only the layouts of those kinds are returned.
  */
-export function* generateStarLayouts(nStars: number, {kinds}: {kinds?: readonly LayoutKind[]|undefined} = {}) {
+export function* generateStarLayouts(nStars: number, { kinds }: { kinds?: readonly LayoutKind[]|undefined } = {}) {
     const kindsIsUndefined = kinds === undefined;
     if (!kindsIsUndefined) {
         // kinds = [];
@@ -171,12 +171,12 @@ const DEFAULT_CANTON_FACTOR = 247/175;
  * The optimization key makes the stars layout fit as best possible in a canton of that ratio (width over height)
  */
 export function findBestStarLayout(nStars: number,
-    {cantonFactor = DEFAULT_CANTON_FACTOR, kinds}: {cantonFactor?: number, kinds?: readonly LayoutKind[]} = {},
+    { cantonFactor = DEFAULT_CANTON_FACTOR, kinds }: { cantonFactor?: number, kinds?: readonly LayoutKind[] } = {},
 ): Layout {
     let minLayout: Layout|undefined;
     let minValue = Infinity;
-    for (const layout of generateStarLayouts(nStars, {kinds})) {
-        const value = optimizeLayout(layout, cantonFactor)
+    for (const layout of generateStarLayouts(nStars, { kinds })) {
+        const value = optimizeLayout(layout, cantonFactor);
         if (value < minValue) {
             minLayout = layout;
             minValue = value;
@@ -194,10 +194,10 @@ export function findBestStarLayout(nStars: number,
  * The entries are already sorted by the value, so by decreasing fittingness.
  */
 export function findBestStarLayouts(nStars: number,
-    {cantonFactor = DEFAULT_CANTON_FACTOR, kinds}: {cantonFactor?: number, kinds?: readonly LayoutKind[]} = {},
+    { cantonFactor = DEFAULT_CANTON_FACTOR, kinds }: { cantonFactor?: number, kinds?: readonly LayoutKind[] } = {},
 ): ReadonlyMap<Layout, Comparable> {
     return new Map(
-        Array.from(generateStarLayouts(nStars, {kinds}))
+        Array.from(generateStarLayouts(nStars, { kinds }))
             .map(l => [l, optimizeLayout(l, cantonFactor)] as const)
             .sort(([_l1, c1], [_l2, c2]) => c1-c2));
 }

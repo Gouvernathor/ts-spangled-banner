@@ -20,7 +20,7 @@ export const FlagPalette = {
 const SVG_NS = "http://www.w3.org/2000/svg";
 
 export function getSVGFromLayout(measurements: Measurements, layout: Readonly<Layout>,
-    {width, height, colors=FlagPalette.DEFAULT}: {width?: number|string, height?: number|string, colors?: FlagColors} = {},
+    { width, height, colors=FlagPalette.DEFAULT }: { width?: number|string, height?: number|string, colors?: FlagColors } = {},
 ): SVGSVGElement {
     const svg = document.createElementNS(SVG_NS, "svg");
 
@@ -33,7 +33,7 @@ export function getSVGFromLayout(measurements: Measurements, layout: Readonly<La
 }
 
 export function getSVGFromStarCoordinates(measurements: Measurements, starCoordinates: readonly (readonly [number, number])[]|ReadonlyMap<readonly [number, number], number>,
-    {width, height, colors=FlagPalette.DEFAULT}: {width?: number|string, height?: number|string, colors?: FlagColors} = {},
+    { width, height, colors=FlagPalette.DEFAULT }: { width?: number|string, height?: number|string, colors?: FlagColors } = {},
 ): SVGSVGElement {
     const svg = document.createElementNS(SVG_NS, "svg");
 
@@ -200,7 +200,7 @@ function addCantonFromCoordinates(svg: SVGSVGElement, measurements: Measurements
 }
 
 function getStarPath(radius: number) {
-    const [top, topright, bottomright, bottomleft, topleft] = Array.from({length: 5}, (_, k) => {
+    const [top, topright, bottomright, bottomleft, topleft] = Array.from({ length: 5 }, (_, k) => {
         const angle = 3*Math.PI/2 + k*2*Math.PI/5;
         return [Math.cos(angle), Math.sin(angle)] as const;
     });
