@@ -1,3 +1,4 @@
+import { tuple } from "./utils.js";
 import { coordinatesFromLayout, Measurements } from "./geometry.js";
 import { Layout } from "./stars.js";
 
@@ -227,7 +228,7 @@ function addCantonFromCoordinates(svg: SVGSVGElement,
 function getStarPath(radius: number) {
     const [ top, topright, bottomright, bottomleft, topleft ] = tuple(5, k => {
         const angle = 3*Math.PI/2 + k*2*Math.PI/5;
-        return [Math.cos(angle), Math.sin(angle)] as const;
+        return [ Math.cos(angle), Math.sin(angle) ] as const;
     });
 
     const
@@ -248,13 +249,3 @@ function getStarPath(radius: number) {
         'z',
     ].join("\n");
 }
-
-// TODO move to an utils module
-function tuple<T, L extends number>(length: L, map: (k: number) => T) {
-    return Array.from({ length }, (_, k) => map(k)) as Tuple<T, L>;
-}
-type Tuple<
-  T,
-  N extends number,
-  R extends T[] = [],
-> = R['length'] extends N ? R : Tuple<T, N, [T, ...R]>;
