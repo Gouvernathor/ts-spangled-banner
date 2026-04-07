@@ -225,12 +225,12 @@ function addCantonFromCoordinates(svg: SVGSVGElement,
     }
 }
 
-function getStarPath(radius: number) {
-    const [ top, topright, bottomright, bottomleft, topleft ] = tuple(5, k => {
-        const angle = 3*Math.PI/2 + k*2*Math.PI/5;
-        return [ Math.cos(angle), Math.sin(angle) ] as const;
-    });
+const [ top, topright, bottomright, bottomleft, topleft ] = tuple(5, k => {
+    const angle = 3*Math.PI/2 + k*2*Math.PI/5;
+    return [ Math.cos(angle), Math.sin(angle) ] as const;
+});
 
+function getStarPath(radius: number) { 
     const
         initialY = radius * (top[1]),
         firstMoveX = radius * (bottomright[0]-top[0]),
