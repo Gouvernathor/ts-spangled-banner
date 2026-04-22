@@ -72,7 +72,7 @@ function populateHeader(svg: SVGSVGElement,
     }
 
     svg.setAttribute("viewbox", `0 0 ${measurements.width} ${measurements.height}`);
-    svg.appendChild(new Comment("Created with ts-spangled-banner (https://github.com/Gouvernathor/ts-spangled-banner)"));
+    svg.appendChild(document.createComment("Created with ts-spangled-banner (https://github.com/Gouvernathor/ts-spangled-banner)"));
 }
 
 function addRectStripes(svg: SVGSVGElement,
@@ -230,7 +230,7 @@ const [ top, topright, bottomright, bottomleft, topleft ] = tuple(5, k => {
     return [ Math.cos(angle), Math.sin(angle) ] as const;
 });
 
-function getStarPath(radius: number) { 
+function getStarPath(radius: number) {
     const
         initialY = radius * (top[1]),
         firstMoveX = radius * (bottomright[0]-top[0]),
