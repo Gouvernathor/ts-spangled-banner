@@ -127,11 +127,6 @@ export interface GSLOptions {
  */
 export function* generateStarLayouts(nStars: number, { kinds }: Partial<Readonly<GSLOptions>> = {}) {
     const kindsIsUndefined = kinds === undefined;
-    if (!kindsIsUndefined) {
-        // kinds = [];
-        // TODO: list of all the kinds
-        // TODO: decide if supporting casefold or not (presumably using toLowerCase)
-    }
     const gridInKinds = kindsIsUndefined || kinds!.includes(LayoutKind.GRID);
 
     for (let a = 1; a <= nStars; a++) {
