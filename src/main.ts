@@ -2,30 +2,30 @@ import { Measurements, MGOptions } from "./geometry.js";
 import { FBSLOptions, findBestStarLayout } from "./stars.js";
 import { getSVGFromLayout, GSVGOptions } from "./svg.js";
 
-interface GetSVGParams extends FBSLOptions, Omit<MGOptions, "starLayout">, GSVGOptions {
+interface GetSVGOptions extends FBSLOptions, Omit<MGOptions, "starLayout">, GSVGOptions {
 }
 
 /**
  * This is the preferred overload.
  */
 export function getSVG(nStars: number,
-    options?: Partial<Readonly<GetSVGParams>>,
+    options?: Partial<Readonly<GetSVGOptions>>,
 ): SVGSVGElement;
 /**
  * @deprecated
  * This version is deprecated. Please use the overload with the single options object instead.
  */
 export function getSVG(nStars: number,
-    FBSLParams?: Partial<Readonly<FBSLOptions>>,
-    MGParams?: Partial<Readonly<Omit<MGOptions, "starLayout">>>,
-    GSFLParams?: Partial<Readonly<GSVGOptions>>,
+    fbslOptions?: Partial<Readonly<FBSLOptions>>,
+    mgOptions?: Partial<Readonly<Omit<MGOptions, "starLayout">>>,
+    gsflOptions?: Partial<Readonly<GSVGOptions>>,
 ): SVGSVGElement;
 export function getSVG(nStars: number,
-    options?: Partial<Readonly<GetSVGParams|FBSLOptions>>,
-    MGParams?: Partial<Readonly<Omit<MGOptions, "starLayout">>>,
-    GSFLParams?: Partial<Readonly<GSVGOptions>>,
+    options?: Partial<Readonly<GetSVGOptions|FBSLOptions>>,
+    mgOptions?: Partial<Readonly<Omit<MGOptions, "starLayout">>>,
+    gsflOptions?: Partial<Readonly<GSVGOptions>>,
 ): SVGSVGElement {
     const layout = findBestStarLayout(nStars, options);
-    const measurements = Measurements.generate({ starLayout: layout, ...options, ...MGParams });
-    return getSVGFromLayout(measurements, layout, { ...options, ...GSFLParams });
+    const measurements = Measurements.generate({ starLayout: layout, ...options, ...mgOptions });
+    return getSVGFromLayout(measurements, layout, { ...options, ...gsflOptions });
 }
