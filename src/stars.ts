@@ -154,8 +154,9 @@ export function* generateStarLayouts(nStars: number, { kinds }: Partial<Readonly
 
                 for (const d of dOptions) {
                     if (a*b + c*d === nStars) {
-                        if (kindsIsUndefined || kinds!.includes(LayoutKind.fromLayout([a, b, c, d]))) {
-                            yield [a, b, c, d] as Layout;
+                        const layout = [a, b, c, d] as Layout;
+                        if (kindsIsUndefined || kinds!.includes(LayoutKind.fromLayout(layout))) {
+                            yield layout;
                         }
                     }
                 }
