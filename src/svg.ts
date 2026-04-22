@@ -120,8 +120,10 @@ function addCantonFromLayout(svg: SVGSVGElement,
     layout: Readonly<Layout>,
     colors: FlagColors,
 ) {
-    // @ts-expect-error
     const canton = svg.appendChild(document.createElementNS(SVG_NS, "rect"));
+    canton.setAttribute("width", measurements.cantonWidth.toString());
+    canton.setAttribute("height", measurements.cantonHeight.toString());
+    canton.setAttribute("fill", colors.canton);
 
     const [nbLgRows, lnLgRows, nbShRows, lnShRows] = layout;
     if (!(nbLgRows > 0 && lnLgRows > 0)) {
