@@ -21,11 +21,11 @@ export function getSVG(nStars: number,
     GSFLParams?: Partial<Readonly<GSVGOptions>>,
 ): SVGSVGElement;
 export function getSVG(nStars: number,
-    FBSLParams?: Partial<Readonly<FBSLOptions>>,
+    options?: Partial<Readonly<GetSVGParams|FBSLOptions>>,
     MGParams?: Partial<Readonly<Omit<MGOptions, "starLayout">>>,
     GSFLParams?: Partial<Readonly<GSVGOptions>>,
 ): SVGSVGElement {
-    const layout = findBestStarLayout(nStars, FBSLParams);
-    const measurements = Measurements.generate({ starLayout: layout, ...FBSLParams, ...MGParams });
-    return getSVGFromLayout(measurements, layout, { ...FBSLParams, ...GSFLParams });
+    const layout = findBestStarLayout(nStars, options);
+    const measurements = Measurements.generate({ starLayout: layout, ...options, ...MGParams });
+    return getSVGFromLayout(measurements, layout, { ...options, ...GSFLParams });
 }
