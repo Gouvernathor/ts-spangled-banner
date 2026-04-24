@@ -8,13 +8,13 @@ See the official math specifications in [Executive Order 10834](https://en.wikis
 
 These are found in the main `star-spangled-banner` module.
 
-`getSvg(nStars: number, FBSLParams: object, MGParams: object, GSFLParams: object)`
+`getSvg(nStars: number, options)`
 
 This function creates a stars-and-stripes flag as an SVG element which can then be integrated in the DOM. The parameters are as follows:
 
 - `nStars: number`: the number of stars to display in the canton.
 
-- `FBSLParams: object`, `MGParams: object` and `GSFLParams: object`: parameters passed through to the corresponding options parameters to `stars.findBestStarLayout`, `geometry.Measurements.generate` and `getSVGFromLayout`, respectively - except that `MGParams.starLayout` is ignored.
+- `options`: parameters passed through to the corresponding options parameters to `stars.findBestStarLayout`, `geometry.Measurements.generate` and `getSVGFromLayout`, respectively - except that the `starLayout` option to `Measurements.generate` is ignored.
 
 ## Stars submodule content
 
