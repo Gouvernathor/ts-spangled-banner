@@ -56,7 +56,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Gouvernathor/ts-spangled-banner.git"
+    "url": "git+https://codeberg.org/Gouvernathor/ts-spangled-banner.git"
   },
   "keywords": [
     "flag",
@@ -68,7 +68,7 @@
   "bugs": {
     "url": "https://github.com/Gouvernathor/ts-spangled-banner/issues"
   },
-  "homepage": "https://github.com/Gouvernathor/ts-spangled-banner#readme",
+  "homepage": "https://codeberg.org/Gouvernathor/ts-spangled-banner#readme",
   "funding": "https://ko-fi.com/gouvernathor",
   "devDependencies": {
     "@tsconfig/strictest": "^2.0.5",
