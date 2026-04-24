@@ -85,7 +85,7 @@ export class Measurements {
 // nStripes determines the size of the canton
 export function* coordinatesFromLayout(layout: Readonly<Layout>,
     { nStripes = 13, proportionalStarSize = true } = {},
-) {
+): Generator<[number, number]> {
     const [a, b, c, d] = layout;
 
     const measurements = Measurements.generate({ starLayout: layout, nStripes, proportionalStarSize });
@@ -98,7 +98,7 @@ export function* coordinatesFromLayout(layout: Readonly<Layout>,
         case LayoutKind.GRID:
             for (let y = 0; y < a; y++) {
                 for (let x = 0; x < b; x++) {
-                    yield [relativeXMargin + x * relativeXSpacing, relativeYMargin + y * relativeYSpacing] as const;
+                    yield [relativeXMargin + x * relativeXSpacing, relativeYMargin + y * relativeYSpacing];
                 }
             }
             break;
@@ -110,13 +110,13 @@ export function* coordinatesFromLayout(layout: Readonly<Layout>,
             // left-aligned rows
             for (let y = 0; y < a; y++) {
                 for (let x = 0; x < b; x++) {
-                    yield [relativeXMargin + 2*x * relativeXSpacing, relativeYMargin + 2*y * relativeYSpacing] as const;
+                    yield [relativeXMargin + 2*x * relativeXSpacing, relativeYMargin + 2*y * relativeYSpacing];
                 }
             }
             // right-aligned rows
             for (let y = 0; y < c; y++) {
                 for (let x = 0; x < d; x++) {
-                    yield [relativeXMargin + (2*x + 1) * relativeXSpacing, relativeYMargin + (2*y + 1) * relativeYSpacing] as const;
+                    yield [relativeXMargin + (2*x + 1) * relativeXSpacing, relativeYMargin + (2*y + 1) * relativeYSpacing];
                 }
             }
             break;
@@ -125,18 +125,15 @@ export function* coordinatesFromLayout(layout: Readonly<Layout>,
             // long rows
             for (let y = 0; y < a; y++) {
                 for (let x = 0; x < b; x++) {
-                    yield [relativeXMargin + 2*x * relativeXSpacing, relativeYMargin + (2*y + 1) * relativeYSpacing] as const;
+                    yield [relativeXMargin + 2*x * relativeXSpacing, relativeYMargin + (2*y + 1) * relativeYSpacing];
                 }
             }
             // short rows
             for (let y = 0; y < c; y++) {
                 for (let x = 0; x < d; x++) {
-                    yield [relativeXMargin + (2*x + 1) * relativeXSpacing, relativeYMargin + 2*y * relativeYSpacing] as const;
+                    yield [relativeXMargin + (2*x + 1) * relativeXSpacing, relativeYMargin + 2*y * relativeYSpacing];
                 }
             }
             break;
-
-        default:
-            throw new Error(`Invalid layout: ${layout}`);
     }
 }
