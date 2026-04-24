@@ -79,8 +79,8 @@ function addRectStripes(svg: SVGSVGElement,
     measurements: Measurements,
     colors: FlagColors,
 ) {
-    const nbWhiteStripes = (measurements.height / measurements.stripeHeight) / 2;
-    const nbShortWhiteStripes = (measurements.cantonHeight / measurements.stripeHeight) / 2;
+    const nbWhiteStripes = Math.floor((measurements.height / measurements.stripeHeight) / 2);
+    const nbShortWhiteStripes = Math.floor((measurements.cantonHeight / measurements.stripeHeight) / 2);
     const whiteID = colors === FlagPalette.DEFAULT ?
         "white_stripe" : "inner_stripe";
 
