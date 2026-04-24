@@ -83,9 +83,11 @@ export class Measurements {
 }
 
 // nStripes determines the size of the canton
-export function* coordinatesFromLayout(layout: Readonly<Layout>,
-    { nStripes = 13, proportionalStarSize = true, measurements = Measurements.generate({ starLayout: layout, nStripes, proportionalStarSize }) } = {},
-): Generator<[number, number]> {
+export function* coordinatesFromLayout(layout: Readonly<Layout>, {
+    nStripes = 13,
+    proportionalStarSize = true,
+    measurements = Measurements.generate({ starLayout: layout, nStripes, proportionalStarSize }),
+} = {}): Generator<[number, number]> {
     const [a, b, c, d] = layout;
 
     const relativeXMargin = measurements.horizontalStarsMargin / measurements.cantonWidth;
