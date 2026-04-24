@@ -71,7 +71,7 @@ function populateHeader(svg: SVGSVGElement,
         svg.setAttribute("height", "100%");
     }
 
-    svg.setAttribute("viewbox", `0 0 ${measurements.width} ${measurements.height}`);
+    svg.setAttribute("viewBox", `0 0 ${measurements.width} ${measurements.height}`);
     svg.appendChild(document.createComment("Created with ts-spangled-banner (https://github.com/Gouvernathor/ts-spangled-banner)"));
 }
 
