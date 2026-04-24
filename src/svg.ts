@@ -214,13 +214,14 @@ function addCantonFromCoordinates(svg: SVGSVGElement,
     starPath.setAttribute("fill", colors.stars);
 
     const doScaling = isReadonlyMap(starCoordinates);
-    for (const [x, y] of doScaling ? starCoordinates.keys() : starCoordinates) {
+    for (const coordinates of doScaling ? starCoordinates.keys() : starCoordinates) {
+        const [x, y] = coordinates;
         const use = svg.appendChild(document.createElementNS(SVG_NS, "use"));
         use.setAttribute("href", "#star");
         use.setAttribute("x", (x*measurements.cantonWidth).toString());
         use.setAttribute("y", (y*measurements.cantonHeight).toString());
         if (doScaling) {
-            const starSize = starCoordinates.get([x, y])!;
+            const starSize = starCoordinates.get(coordinates)!;
             const starScale = starSize/measurements.starDiameter;
             if (starScale !== 1) {
                 use.setAttribute("transform", `scale(${starScale})`);
