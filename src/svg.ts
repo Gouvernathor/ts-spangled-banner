@@ -190,6 +190,8 @@ function addCantonFromLayout(svg: SVGSVGElement,
     }
 }
 
+const isReadonlyMap: <K, V>(c: any) => c is ReadonlyMap<K, V> = c => c instanceof Map;
+
 function addCantonFromCoordinates(svg: SVGSVGElement,
     measurements: Measurements,
     starCoordinates: Iterable<readonly [number, number]> | ReadonlyMap<readonly [number, number], number>,
@@ -211,7 +213,7 @@ function addCantonFromCoordinates(svg: SVGSVGElement,
     starPath.setAttribute("d", starPathD);
     starPath.setAttribute("fill", colors.stars);
 
-    const doScaling = starCoordinates instanceof Map;
+    const doScaling = isReadonlyMap(starCoordinates);
     for (const [x, y] of doScaling ? starCoordinates.keys() : starCoordinates) {
         const use = svg.appendChild(document.createElementNS(SVG_NS, "use"));
         use.setAttribute("href", "#star");
