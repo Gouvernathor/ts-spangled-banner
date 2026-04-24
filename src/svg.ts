@@ -36,7 +36,7 @@ export function getSVGFromLayout(
     populateHeader(svg, width, height, measurements);
     addRectStripes(svg, measurements, colors);
     // addCantonFromLayout(svg, measurements, layout, colors); // possible alternative
-    addCantonFromCoordinates(svg, measurements, coordinatesFromLayout(layout), colors);
+    addCantonFromCoordinates(svg, measurements, coordinatesFromLayout(layout, { measurements }), colors);
 
     return svg;
 }
