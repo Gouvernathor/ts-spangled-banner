@@ -8,9 +8,14 @@ interface GetSVGOptions extends FBSLOptions, MGOptions, GSVGOptions {
     nStars: number;
 }
 
-export function getSVG(options?: Partial<Readonly<GetSVGOptions>>): SVGSVGElement {
-    const layout = options?.starLayout ??
-        findBestStarLayout(options?.nStars ?? DEFAULT_N_STARS, options);
+export function getSVG(options?: Partial<Readonly<GetSVGOptions>>): SVGSVGElement;
+export function getSVG(nStars: number): SVGSVGElement;
+export function getSVG(options: number|Partial<Readonly<GetSVGOptions>> = {}): SVGSVGElement {
+    if (typeof options === "number") {
+        options = { nStars: options };
+    }
+    const layout = options.starLayout ??
+        findBestStarLayout(options.nStars ?? DEFAULT_N_STARS, options);
     const measurements = Measurements.generate({ starLayout: layout, ...options });
     return getSVGFromLayout(measurements, layout, options);
 }
