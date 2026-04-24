@@ -190,7 +190,7 @@ function addCantonFromLayout(svg: SVGSVGElement,
     }
 }
 
-const isReadonlyMap: <K, V>(c: any) => c is ReadonlyMap<K, V> = c => c instanceof Map;
+const isReadonlyMap: (c: any) => c is ReadonlyMap<any, any> = c => c instanceof Map;
 
 function addCantonFromCoordinates(svg: SVGSVGElement,
     measurements: Measurements,
