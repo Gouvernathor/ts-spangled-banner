@@ -1,6 +1,6 @@
 {
   "name": "star-spangled-banner",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Generator of customizable SVG displays of the US flag",
   "type": "module",
   "main": "./dist/main.js",
