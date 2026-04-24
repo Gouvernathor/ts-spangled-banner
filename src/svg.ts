@@ -207,7 +207,7 @@ function addCantonFromCoordinates(svg: SVGSVGElement,
         return;
     }
 
-    const starPathD = getStarPath(measurements.starDiameter);
+    const starPathD = getStarPath(measurements.starDiameter/2);
     const starPath = svg.appendChild(document.createElementNS(SVG_NS, "defs")).appendChild(document.createElementNS(SVG_NS, "path"));
     starPath.setAttribute("id", "star");
     starPath.setAttribute("d", starPathD);
