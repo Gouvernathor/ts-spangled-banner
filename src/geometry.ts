@@ -82,7 +82,13 @@ export class Measurements {
     }
 }
 
-// nStripes determines the size of the canton
+export function coordinatesFromLayout(layout: Readonly<Layout>, options: {
+    measurements: Measurements,
+}): Generator<[number, number]>;
+export function coordinatesFromLayout(layout: Readonly<Layout>, options: {
+    nStripes: number,
+    proportionalStarSize: boolean,
+}): Generator<[number, number]>;
 export function* coordinatesFromLayout(layout: Readonly<Layout>, {
     nStripes = 13,
     proportionalStarSize = true,
