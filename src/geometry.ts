@@ -85,7 +85,7 @@ export class Measurements {
 export function coordinatesFromLayout(layout: Readonly<Layout>, options: {
     measurements: Measurements,
 }): Generator<[number, number]>;
-export function coordinatesFromLayout(layout: Readonly<Layout>, options: {
+export function coordinatesFromLayout(layout: Readonly<Layout>, options?: {
     nStripes: number,
     proportionalStarSize: boolean,
 }): Generator<[number, number]>;
