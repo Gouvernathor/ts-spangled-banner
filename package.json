@@ -52,6 +52,7 @@
   ],
   "scripts": {
     "build": "tsc",
+    "generate": "npm run build && node scripts/run.ts",
     "test": "vitest"
   },
   "repository": {
