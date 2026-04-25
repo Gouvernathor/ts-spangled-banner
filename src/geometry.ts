@@ -4,6 +4,7 @@ export interface MGOptions {
     starLayout: Readonly<Layout>;
     nStripes: number;
     proportionalStarSize: boolean;
+    multiplyFactor: number;
 }
 
 export class Measurements {
@@ -41,11 +42,12 @@ export class Measurements {
         starLayout = DEFAULT_LAYOUT,
         nStripes = 13,
         proportionalStarSize = true,
+        multiplyFactor = 1,
     }: Partial<Readonly<MGOptions>>): Measurements {
         const [a, b, c, d] = starLayout;
         const kindIsGrid = LayoutKind.fromLayout(starLayout) === LayoutKind.GRID;
 
-        const A = 1;
+        const A = multiplyFactor;
         const B = A * 19/10;
         const C = A * Math.ceil(nStripes/2)/nStripes;
         const D = B * 2/5;

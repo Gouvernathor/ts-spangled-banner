@@ -86,9 +86,9 @@ These are found in the `star-spangled-banner/geometry` module. This submodule ge
 
   The constructor takes 10 parameters, all numbers in the same unit : `height`, `width`, `canton_height`, `canton_width`, `vertical_stars_margin`, `vertical_star_spacing`, `horizontal_stars_margin`, `horizontal_star_spacing`, `star_diameter` and `stripe_height`. They are available as attributes. `Measurements` instances are read-only and immutable.
 
-  `Measurements.generate({starLayout: Layout = stars.DEFAULT_LAYOUT, nStripes: number = 13, proportionalStarSize: boolean = true}) -> Measurements`
+  `Measurements.generate({starLayout: Layout = stars.DEFAULT_LAYOUT, nStripes: number = 13, proportionalStarSize: boolean = true, multiplyFactor?: number}) -> Measurements`
 
-  This static method generates the specifications for a flag with the given layout (which includes the number of stars) and number of stripes. The `proportionalStarSize` parameter enables the star size to be scaled to fit best, in a way which makes the 50-star flag same as the official specifications. If false, the stars keep the same size as the 50-star flag regardless of the number of stars.
+  This static method generates the specifications for a flag with the given layout (which includes the number of stars) and number of stripes. The `proportionalStarSize` parameter enables the star size to be scaled to fit best, in a way which makes the 50-star flag same as the official specifications. If false, the stars keep the same size as the 50-star flag regardless of the number of stars. The `multiplyFactor` increases the generated values, becoming the value of the flag's height : that can solve display issues when too-small values get rounded up by engines, as can happen in some browsers. With an infinitely precise engine, there's no visual difference.
 
 `coordinatesFromLayout(layout: Layout, options?)`
 
