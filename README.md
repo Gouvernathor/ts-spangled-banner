@@ -16,7 +16,7 @@ This function creates a stars-and-stripes flag as an SVG element which can then 
 
 - either `nStars: number` the number of stars to display in the canton.
 
-- or an `options` object: parameters passed through to the corresponding options parameters to `stars.findBestStarLayout`, `geometry.Measurements.generate` and `getSVGFromLayout`, respectively - except that the `starLayout` option to `Measurements.generate` is ignored, and that an additional key, `nStars: number` is taken.
+- or an `options` object: parameters passed through to the corresponding options parameters to `stars.findBestStarLayout`, `geometry.Measurements.generate` and `getSVGFromLayout`, respectively. An additional key, `nStars: number` is taken, and ignored if the `starLayout` option to `Measurements.generate` is passed.
 
 ## Stars submodule content
 
