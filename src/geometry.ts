@@ -42,7 +42,7 @@ export class Measurements {
         starLayout = DEFAULT_LAYOUT,
         nStripes = 13,
         proportionalStarSize = true,
-        multiplyFactor = 1,
+        multiplyFactor = 3000,
     }: Partial<Readonly<MGOptions>>): Measurements {
         const [a, b, c, d] = starLayout;
         const kindIsGrid = LayoutKind.fromLayout(starLayout) === LayoutKind.GRID;
