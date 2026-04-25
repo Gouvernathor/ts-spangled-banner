@@ -84,13 +84,18 @@ These are found in the `star-spangled-banner/geometry` module. This submodule ge
 
   The constructor takes 10 parameters, all numbers in the same unit : `height`, `width`, `canton_height`, `canton_width`, `vertical_stars_margin`, `vertical_star_spacing`, `horizontal_stars_margin`, `horizontal_star_spacing`, `star_diameter` and `stripe_height`. They are available as attributes. `Measurements` instances are read-only and immutable.
 
-  `Measurements.generate({stars_layout: Layout = stars.DEFAULT_LAYOUT, nStripes: number = 13, proportionalStarSize: boolean = true}) -> Measurements`
+  `Measurements.generate({starLayout: Layout = stars.DEFAULT_LAYOUT, nStripes: number = 13, proportionalStarSize: boolean = true}) -> Measurements`
 
   This static method generates the specifications for a flag with the given layout (which includes the number of stars) and number of stripes. The `proportionalStarSize` parameter enables the star size to be scaled to fit best, in a way which makes the 50-star flag same as the official specifications. If false, the stars keep the same size as the 50-star flag regardless of the number of stars.
 
-`coordinatesFromLayout(layout: Layout, {nStripes: number = 13, proportionalStarSize: boolean = true})`
+`coordinatesFromLayout(layout: Layout, options?)`
 
   This generates `[x, y]` arrays of the coordinates each star inside the canton, relative to the canton size, in arbitrary order.
+
+  `options` can take one of two shapes:
+
+  - either a `{ measurements: Measurements }`, out of which will be extracted the canton size and the star spacing
+  - or `{ nStripes?: number, proportionalStarSize?: boolean }` which will be used to generate a Measurements object ; it is wasteful to let it be computed again, so if you have a Measurements object at hand, you should pass it to the function.
 
 ## SVG submodule content
 
