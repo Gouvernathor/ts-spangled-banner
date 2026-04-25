@@ -8,13 +8,15 @@ See the official math specifications in [Executive Order 10834](https://en.wikis
 
 These are found in the main `star-spangled-banner` module.
 
-`getSvg(nStars: number, options)`
+`getSvg(nStars: number)`
+
+`getSvg(options?)`
 
 This function creates a stars-and-stripes flag as an SVG element which can then be integrated in the DOM. The parameters are as follows:
 
-- `nStars: number`: the number of stars to display in the canton.
+- either `nStars: number` the number of stars to display in the canton.
 
-- `options`: parameters passed through to the corresponding options parameters to `stars.findBestStarLayout`, `geometry.Measurements.generate` and `getSVGFromLayout`, respectively - except that the `starLayout` option to `Measurements.generate` is ignored.
+- or an `options` object: parameters passed through to the corresponding options parameters to `stars.findBestStarLayout`, `geometry.Measurements.generate` and `getSVGFromLayout`, respectively - except that the `starLayout` option to `Measurements.generate` is ignored, and that an additional key, `nStars: number` is taken.
 
 ## Stars submodule content
 
